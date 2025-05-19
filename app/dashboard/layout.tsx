@@ -2,7 +2,20 @@ import React from "react";
 import DashboardNavigation from "../components/dashboard/DashboardNavigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { MenuIcon } from "lucide-react";
+import { CircleUser, MenuIcon } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  RegisterLink,
+  LoginLink,
+  LogoutLink,
+} from "@kinde-oss/kinde-auth-nextjs/components";
 
 const DashboardLayout = ({
   children,
@@ -33,6 +46,26 @@ const DashboardLayout = ({
             </nav>
           </SheetContent>
         </Sheet>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant={"secondary"}
+              size={"icon"}
+              className="rounded-full"
+            >
+              <CircleUser className="w-5 h-5" />
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <LogoutLink>logout</LogoutLink>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </header>
     </div>
   );
