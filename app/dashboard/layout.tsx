@@ -11,15 +11,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  RegisterLink,
-  LoginLink,
-  LogoutLink,
-} from "@kinde-oss/kinde-auth-nextjs/components";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
 
-const DashboardLayout = ({
+const DashboardLayout = async ({
   children,
 }: Readonly<{ children: React.ReactNode }>) => {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user && user?.email !== "babai.m.bose@gmail.com") return redirect("/");
+
   return (
     <div className="flex w-full flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <header className="sticky t-0 flex h-16 items-center justify-between gap-4 border-b border-b-gray-300 bg-white">
@@ -67,6 +70,7 @@ const DashboardLayout = ({
           </DropdownMenuContent>
         </DropdownMenu>
       </header>
+      <main className="my-5">{children}</main>
     </div>
   );
 };
